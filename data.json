@@ -1,0 +1,24 @@
+{
+    "students": {
+        "pratikpatwe111": {
+            "studentName": "John Doe",
+            "dateOfBirth": "01/01/2000",
+            "address": "123 Main St",
+            "email": "john@example.com",
+            "phone": "+1234567890",
+            "fatherName": "Father's Name",
+            "motherName": "Mother's Name",
+            "fatherOccupation": "Engineer",
+            "motherOccupation": "Doctor",
+            "parentPhone": "+0987654321",
+            "enrollmentId": "ADT24SOCB0827",
+            "rollNumber": "39",
+            "year": "First Year",
+            "division": "SOC",
+            "language": "Python",
+            "mdSubject": "Event Mangement"
+        }
+    }
+    
+  }
+  

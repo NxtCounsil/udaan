@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Attendance Table</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f3ff;
+            color: #333;
+        }
+
+        .container {
+            display: none;
+            opacity: 0;
+            animation: fadeIn 2s forwards;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 40px auto;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+
+        h2 {
+            text-align: center;
+            color: #5e3c6a;
+            margin-bottom: 20px;
+            font-size: 28px;
+        }
+
+        .header {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .header div {
+            margin: 10px 5px;
+            flex: 1 1 200px; /* Flex grow/shrink and basis */
+            min-width: 150px; /* Minimum width */
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #5e3c6a;
+        }
+
+        select, input {
+            padding: 8px;
+            border: 1px solid #d1a4ff;
+            background-color: #f9f3ff;
+            border-radius: 4px;
+            width: 100%; /* Full width */
+            box-sizing: border-box; /* Include padding in width */
+        }
+
+        button {
+            background-color: #8f61cc;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+            font-size: 16px;
+            width: 100%; /* Full width */
+        }
+
+        button:hover {
+            background-color: #a57ddd;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            overflow-x: auto;
+        }
+
+        table, th, td {
+            border: 1px solid #d1a4ff;
+            text-align: center;
+            padding: 12px;
+        }
+
+        th {
+            background-color: #e4d4f7;
+            color: #5e3c6a;
+        }
+
+        input {
+            width: 60px;
+            text-align: center;
+            transition: background-color 0.3s ease;
+        }
+
+        input:focus {
+            background-color: #e4d4f7;
+        }
+
+        .monthly-summary {
+            margin-top: 20px;
+            background-color: #f1e9ff;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .monthly-summary h3 {
+            color: #5e3c6a;
+        }
+
+        .totals {
+            font-weight: bold;
+            color: #5e3c6a;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            color: #5e3c6a;
+            font-size: 14px;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+            }
+
+            h2 {
+                font-size: 24px;
+            }
+
+            th, td {
+                padding: 10px;
+                font-size: 14px;
+            }
+
+            button {
+                font-size: 14px;
+                padding: 8px 16px;
+            }
+
+            input {
+                width: auto; /* Allow inputs to be smaller on mobile */
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 10px;
+                max-width: 100%;
+            }
+
+            h2 {
+                font-size: 20px;
+            }
+
+            th, td {
+                padding: 8px;
+                font-size: 12px;
+            }
+
+            button {
+                font-size: 12px;
+                padding: 6px 12px;
+            }
+
+            table {
+                display: block;
+                overflow-x: auto;
+                white-space: nowrap;
+            }
+
+            .monthly-summary {
+                padding: 10px;
+                font-size: 12px;
+            }
+
+            .footer {
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container" id="attendanceContainer">
+        <h2>Attendance Tracker</h2>
+
+        <div class="header">
+            <div>
+                <label for="userName">User Name: </label>
+                <input type="text" id="userName" name="userName" placeholder="Enter your name">
+            </div>
+            <div>
+                <label for="division">Division: </label>
+                <input type="text" id="division" name="division" placeholder="Enter your division">
+            </div>
+            <div>
+                <label for="monthChoice">Choose Month: </label>
+                <select id="monthChoice" name="monthChoice">
+                    <option value="January">January</option>
+                    <option value="February">February</option>
+                    <option value="March">March</option>
+                    <option value="April">April</option>
+                    <option value="May">May</option>
+                    <option value="June">June</option>
+                    <option value="July">July</option>
+                    <option value="August">August</option>
+                    <option value="September">September</option>
+                    <option value="October">October</option>
+                    <option value="November">November</option>
+                    <option value="December">December</option>
+                </select>
+            </div>
+            <div>
+                <label for="subjectChoice">Choose Subject: </label>
+                <select id="subjectChoice" name="subjectChoice">
+                    <option value="DT">DT</option>
+                    <option value="MFC">MFC</option>
+                    <option value="MCD">MCD</option>
+                    <option value="CT">CT</option>
+                    <option value="total">Total Attendance</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Attendance Table -->
+        <table>
+            <thead>
+                <tr>
+                    <th>Week</th>
+                    <th>Day 1</th>
+                    <th>Day 2</th>
+                    <th>Day 3</th>
+                    <th>Day 4</th>
+                    <th>Day 5</th>
+                    <th>Total Days Present</th>
+                    <th>Total Working Days</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Week 1</td>
+                    <td><input type="text" class="day" id="week1_day1" size="4"></td>
+                    <td><input type="text" class="day" id="week1_day2" size="4"></td>
+                    <td><input type="text" class="day" id="week1_day3" size="4"></td>
+                    <td><input type="text" class="day" id="week1_day4" size="4"></td>
+                    <td><input type="text" class="day" id="week1_day5" size="4"></td>
+                    <td><span id="week1_present" class="totals">0</span></td>
+                    <td><span class="totals">5</span></td>
+                </tr>
+                <tr>
+                    <td>Week 2</td>
+                    <td><input type="text" class="day" id="week2_day1" size="4"></td>
+                    <td><input type="text" class="day" id="week2_day2" size="4"></td>
+                    <td><input type="text" class="day" id="week2_day3" size="4"></td>
+                    <td><input type="text" class="day" id="week2_day4" size="4"></td>
+                    <td><input type="text" class="day" id="week2_day5" size="4"></td>
+                    <td><span id="week2_present" class="totals">0</span></td>
+                    <td><span class="totals">5</span></td>
+                </tr>
+                <tr>
+                    <td>Week 3</td>
+                    <td><input type="text" class="day" id="week3_day1" size="4"></td>
+                    <td><input type="text" class="day" id="week3_day2" size="4"></td>
+                    <td><input type="text" class="day" id="week3_day3" size="4"></td>
+                    <td><input type="text" class="day" id="week3_day4" size="4"></td>
+                    <td><input type="text" class="day" id="week3_day5" size="4"></td>
+                    <td><span id="week3_present" class="totals">0</span></td>
+                    <td><span class="totals">5</span></td>
+                </tr>
+                <tr>
+                    <td>Week 4</td>
+                    <td><input type="text" class="day" id="week4_day1" size="4"></td>
+                    <td><input type="text" class="day" id="week4_day2" size="4"></td>
+                    <td><input type="text" class="day" id="week4_day3" size="4"></td>
+                    <td><input type="text" class="day" id="week4_day4" size="4"></td>
+                    <td><input type="text" class="day" id="week4_day5" size="4"></td>
+                    <td><span id="week4_present" class="totals">0</span></td>
+                    <td><span class="totals">5</span></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- Button to calculate attendance -->
+        <button onclick="calculateAttendance()">Calculate Attendance</button>
+
+        <!-- Monthly attendance summary -->
+        <div class="monthly-summary">
+            <h3>Monthly Attendance Summary</h3>
+            <p>Total Days Present: <span id="totalDaysPresent">0</span></p>
+            <p>Total Working Days: <span class="totals">20</span></p>
+        </div>
+
+        <div class="footer">
+            <p>Attendance Tracker - Built with ❤</p>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+    <script>
+        // Show the container with animation after 2 seconds
+        window.onload = function() {
+            setTimeout(function() {
+                document.getElementById("attendanceContainer").style.display = "block";
+                document.getElementById("attendanceContainer").style.opacity = 1;
+            }, 2000);
+        };
+
+        // Calculate attendance for each week and total monthly attendance
+        function calculateAttendance() {
+            let totalPresentDays = 0;
+            let totalWorkingDays = 20; // Fixed as 20 days for the month (4 weeks x 5 days)
+
+            for (let week = 1; week <= 4; week++) {
+                let presentDays = 0;
+                for (let day = 1; day <= 5; day++) {
+                    let dayInput = document.getElementById('week${week}_day${day}').value;
+                    if (dayInput.toLowerCase() === "p") { // Assuming "P" means Present
+                        presentDays++;
+                    }
+                }
+                document.getElementById('week${week}_present').innerText = presentDays;
+                totalPresentDays += presentDays;
+            }
+
+            // Update monthly summary
+            document.getElementById("totalDaysPresent").innerText = totalPresentDays;
+        }
+
+        document.getElementById('addStudentForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+    
+    const studentName = document.getElementById('studentName').value;
+    const studentEmail = document.getElementById('studentEmail').value;
+    const enrollmentID = document.getElementById('enrollmentID').value;
+    const password = document.getElementById('password').value;
+
+    // Process the form data (e.g., send it to a server)
+    console.log({
+        studentName,
+        studentEmail,
+        enrollmentID,
+        password
+    });
+
+    // Clear the form fields after submission
+    this.reset();
+
+    // Show a success message
+    alert('Student added successfully!');
+});
+
+    </script>
+
+</body>
+</html>

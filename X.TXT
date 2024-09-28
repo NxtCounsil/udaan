@@ -1,0 +1,124 @@
+    <div class="container">
+        <!-- Header Section -->
+        <header>
+            <div class="logo">
+                <img src="LOGO2.png" alt="Logo">
+            </div>
+        </header>
+
+        <!-- Sidebar Navigation -->
+        <aside>
+            <ul>
+                <li><a href="#">Dashboard</a></li>
+                <li><a href="#">Profile</a></li>
+                <li><a href="#">Settings</a></li>
+                <li><a href="#">Messages</a></li>
+                <li><a href="#">Logout</a></li>
+            </ul>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main>
+            <h1>Welcome to the Dashboard</h1>
+
+            <!-- Navigation buttons for different sections -->
+            <div class="nav-options">
+                <button onclick="showSection('personal')">Personal Information</button>
+                <button onclick="showSection('academic')">Academic Information</button>
+                <button onclick="showSection('feedbacks')">Feedbacks</button>
+            </div>
+
+            <!-- Sections for Personal Information, Academic Information, and Feedbacks -->
+            <div id="personal" class="section active">
+                <div class="content-box">
+                    <h2>Personal Information</h2>
+                    <span class="material-icons edit-icon" onclick="toggleEdit()">edit</span>
+                    <table class="info-table">
+                        <tbody>
+                            <tr>
+                                <td><strong>Student Name:</strong></td>
+                                <td><input type="text" value="Example" disabled></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Date of Birth:</strong></td>
+                                <td><input type="text" value="00/00/0000" disabled></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Address:</strong></td>
+                                <td><input type="text" value="123 Main St, City, Country" disabled></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Email:</strong></td>
+                                <td>example@example.com</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Phone:</strong></td>
+                                <td><input type="text" value="+91 0000000000" disabled></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Father's Name:</strong></td>
+                                <td><input type="text" value="Example" disabled></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Mother's Name:</strong></td>
+                                <td><input type="text" value="Example" disabled></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Father's Occupation:</strong></td>
+                                <td><input type="text" value="Example" disabled></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Mother's Occupation:</strong></td>
+                                <td><input type="text" value="Example" disabled></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Phone Number (Father / Mother):</strong></td>
+                                <td><input type="text" value="+91 0000000000" disabled></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div id="academic" class="section">
+                <div class="content-box">
+                    <h2>Academic Information</h2>
+                    <p><strong>Logs:</strong> 100% attendance</p>
+                    <p><strong>Fees Remaining:</strong> $500</p>
+                    <p><strong>Results:</strong> A+</p>
+                </div>
+            </div>
+
+            <div id="feedbacks" class="section">
+                <div class="content-box">
+                    <h2>Feedbacks</h2>
+                    <p>No feedbacks available.</p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <footer>
+        <p>© 2024 Your School Dashboard</p>
+    </footer>
+
+    <script>
+        function showSection(sectionId) {
+            // Hide all sections
+            var sections = document.querySelectorAll('.section');
+            sections.forEach(function(section) {
+                section.classList.remove('active');
+            });
+
+            // Show the selected section with smooth transition
+            var targetSection = document.getElementById(sectionId);
+            targetSection.classList.add('active');
+        }
+
+        function toggleEdit() {
+            const inputs = document.querySelectorAll('#personal input');
+            inputs.forEach(input => {
+                input.disabled = !input.disabled; // Toggle disabled state
+            });
+        }
+    </script>

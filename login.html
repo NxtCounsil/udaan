@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="login.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <title>Login | MIT SOC</title>
+</head>
+<body>
+    <div class="wrapper">
+        <div class="logo">
+        <img class="header-img" src="MITADT.png" alt="MIT ADT LOGO">
+    </div>
+        <h1>Login</h1>
+        <form id="loginForm">
+            <div>
+                <label for="email">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="M160-160q-33 0-56.5-23.5T80-240v-480q0-33 23.5-56.5T160-800h640q33 0 56.5 23.5T880-720v480q0 33-23.5 56.5T800-160H160Zm320-280 320-200v-80L480-520 160-720v80l320 200Z"/></svg>
+                </label>
+                <input type="email" name="email" id="email" placeholder="E-Mail" required>
+            </div>
+            <div>
+                <label for="password">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="M280-360q50 0 85-35t35-85q0-50-35-85t-85-35q-50 0-85 35t-35 85q0 50 35 85t85 35Zm0 120q-100 0-170-70T40-480q0-100 70-170t170-70q81 0 141.5 46T506-560h335l79 79-140 160-100-79-80 80-80-80h-14q-25 72-87 116t-139 44Z"/></svg>
+                </label>
+                <input type="password" name="password" id="password" placeholder="Password" required>
+            </div>
+            <button id="login" type="submit">Login</button>
+        </form>
+        <p>Forget Password? <a href="#" id="forgotPasswordLink">Reset.</a></p>
+    </div>
+
+    <div class="popup" id="popup">
+        <div class="popup-content">
+            <h2>Reset Password?</h2>
+            <p id="popupMessage"></p>
+            <button id="confirmReset">Yes</button>
+            <button id="cancelReset">No</button>
+        </div>
+
+        <div id="popupMessage" class="popup-r"></div>
+    </div>
+
+    <script type="module">
+        // Import Firebase SDK
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-app.js";
+        import { getAuth, signInWithEmailAndPassword, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-auth.js";
+
+        // Firebase configuration
+        const firebaseConfig = {
+          apiKey: "AIzaSyB4IIHXY7DJOnhGpZ7sni76ZU-cCleuohA",
+          authDomain: "mit-soc.firebaseapp.com",
+          projectId: "mit-soc",
+          storageBucket: "mit-soc.appspot.com",
+          messagingSenderId: "543724803126",
+          appId: "1:543724803126:web:0f99f3a09abac2eadeb497",
+          databaseURL: "https://mit-soc-default-rtdb.firebaseio.com"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth();
+
+        // Login functionality
+        document.getElementById("login").addEventListener("click", function(event) {
+            event.preventDefault();
+
+            var email = document.getElementById("email").value;
+            var password = document.getElementById("password").value;
+
+            signInWithEmailAndPassword(auth, email, password)
+              .then((userCredential) => {
+                  const user = userCredential.user;
+                  localStorage.setItem("userEmail", user.email);
+                  window.location.href = "index.html";
+              })
+              .catch((error) => {
+                  alert(error.message);
+              });
+        });
+
+        // Forgot Password functionality
+        document.getElementById("forgotPasswordLink").addEventListener("click", function(event) {
+            event.preventDefault();
+            var email = document.getElementById("email").value;
+
+            // Check if email is entered
+            if (!email) {
+                alert("Please enter your email address first.");
+                return;
+            }
+
+                    // Function to show a popup message
+        function showPopup(message, type = 'success') {
+            const popup = document.getElementById('popupMessage');
+            popup.textContent = message;
+            popup.className = `popup ${type}`;
+            popup.classList.add('show');
+
+            // Automatically hide the popup after 5 seconds
+            setTimeout(() => {
+                popup.classList.remove('show');
+            }, 5000);
+        }
+
+            // Show confirmation popup
+            document.getElementById("popupMessage").innerText = `Do you want to reset the password for ${email}?`;
+            document.getElementById("popup").style.display = "flex";
+        });
+
+        // Handle confirm reset password
+        document.getElementById("confirmReset").addEventListener("click", function() {
+            var email = document.getElementById("email").value;
+
+            sendPasswordResetEmail(auth, email)
+              .then(() => {
+                  alert("Password reset email sent! Check your inbox.");
+                  document.getElementById("popup").style.display = "none";
+              })
+              .catch((error) => {
+                  alert(error.message);
+                  document.getElementById("popup").style.display = "none";
+              });
+        });
+
+        // Handle cancel reset password
+        document.getElementById("cancelReset").addEventListener("click", function() {
+            document.getElementById("popup").style.display = "none";
+        });
+    </script>
+</body>
+</html>

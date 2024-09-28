@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #eef1f5;
+    color: #333;
+}
+
+.container {
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    grid-template-rows: auto 1fr;
+    min-height: 100vh;
+    grid-template-areas:
+        "header header"
+        "sidebar main";
+}
+
+header {
+    grid-area: header;
+    background: linear-gradient(135deg, #6a5acd, #8672ff); /* Gradient background */
+    padding: 20px;
+    display: flex;
+    justify-content: space-between; /* Space for logo and navigation */
+    align-items: center;
+    border-bottom: 5px solid #fff;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+header .logo img {
+    height: 60px;
+    width: auto;
+    transition: transform 0.3s; /* Add a hover effect */
+}
+
+header .logo img:hover {
+    transform: scale(1.1); /* Slightly enlarge the logo on hover */
+}
+
+.header-nav {
+    display: flex;
+    gap: 20px; /* Space between navigation items */
+}
+
+.header-nav a {
+    text-decoration: none;
+    color: white;
+    font-weight: 600;
+    transition: color 0.3s, text-shadow 0.3s;
+}
+
+.header-nav a:hover {
+    color: #f0e68c; /* Lighter color on hover */
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.5); /* Glow effect */
+}
+
+
+aside {
+    grid-area: sidebar;
+    background: linear-gradient(180deg, #5b4abf 0%, #4a3e8d 100%); /* Gradient background */
+    padding: 20px;
+    color: white;
+    border-right: 5px solid #fff;
+    box-shadow: 4px 0 15px rgba(0, 0, 0, 0.2);
+    position: relative; /* For positioning hover effect */
+}
+
+aside h2 {
+    margin-bottom: 20px;
+    font-size: 24px; 
+    color: #f0e68c; /* Lighter color for contrast */
+    text-align: center; /* Center the title */
+}
+
+aside ul {
+    list-style: none;
+}
+
+aside ul li {
+    margin: 15px 0;
+}
+
+aside ul li a {
+    text-decoration: none;
+    color: white;
+    font-size: 18px;
+    padding: 12px 20px;
+    border-radius: 8px; /* More rounded corners */
+    display: flex; 
+    align-items: center; 
+    transition: background-color 0.3s, transform 0.2s; 
+    position: relative; /* For the hover effect */
+}
+
+aside ul li a:hover {
+    background-color: rgba(255, 255, 255, 0.1); /* Light hover effect */
+    transform: translateX(5px); 
+}
+
+aside ul li a:hover::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 4px; /* Line under the item */
+    background: #f0e68c; /* Highlight color */
+    border-radius: 8px; /* Match the button style */
+    transform: scaleX(0);
+    transition: transform 0.3s;
+}
+
+aside ul li a:hover::before {
+    transform: scaleX(1); /* Animate the line on hover */
+}
+
+aside ul li a .material-icons {
+    margin-right: 10px; 
+    font-size: 24px; 
+    vertical-align: middle; 
+}
+
+
+main {
+    grid-area: main;
+    padding: 40px;
+    background-color: white;
+    border-radius: 10px;
+    margin: 20px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s;
+}
+
+main:hover {
+    transform: translateY(-2px);
+}
+
+main h1 {
+    color: #503dbd;
+    font-size: 32px;
+    margin-bottom: 20px;
+}
+
+.nav-options {
+    display: flex;
+    justify-content: space-between; /* Distribute space evenly */
+    margin: 30px 0;
+    gap: 20px; /* Space between buttons */
+}
+
+.nav-options button {
+    background-color: #6653d4;
+    color: white;
+    border: none;
+    padding: 15px 25px; /* Increased padding for better touch targets */
+    border-radius: 10px; /* Rounded corners for a softer look */
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+    transition: background-color 0.3s, transform 0.2s;
+    position: relative; /* For the hover effect */
+    flex: 1; /* Allow buttons to grow equally */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+}
+
+.nav-options button:hover {
+    background-color: #5a47ca;
+    transform: translateY(-3px); /* Lift effect on hover */
+}
+
+.nav-options button:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.1); /* Light overlay on hover */
+    border-radius: 10px;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.nav-options button:hover:before {
+    opacity: 1; /* Show overlay on hover */
+}
+
+.nav-options button i {
+    margin-right: 10px; /* Space between icon and text */
+}
+
+/* Example icon styles */
+.nav-options button .material-icons {
+    font-size: 20px; /* Icon size */
+    vertical-align: middle; /* Align with text */
+}
+
+
+.section {
+    opacity: 0;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    transition: opacity 0.5s ease-in-out;
+    z-index: 1;
+}
+
+.section.active {
+    position: relative;
+    opacity: 1;
+    z-index: 2;
+}
+
+.content-box {
+    padding: 20px;
+    background-color: #8c41dd16;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.01);
+    position: relative;
+}
+
+
+
+footer {
+    text-align: center;
+    padding: 20px;
+    background: linear-gradient(135deg, #4a3e8d, #6a5acd); /* Bold gradient */
+    color: white;
+    position: relative;
+    box-shadow: 0 -2px 10px rgba(251, 249, 249, 0.02);
+    border-top: 1px solid #fff;
+}
+
+footer p {
+    margin: 0;
+    font-size: 18px; /* Larger font size for visibility */
+    font-weight: bold; /* Make text stand out */
+    letter-spacing: 1px; /* Slightly spaced letters for elegance */
+}
+
+footer p::after {
+    content: '';
+    display: block;
+    width: 80px; /* Emphasizing the line */
+    height: 4px; /* Thickness of the line */
+    background: #f0e68c; /* Highlight color */
+    margin: 10px auto; /* Center the line */
+    border-radius: 5px; /* Rounded edges */
+}
+
+
+.section {
+    display: none;
+}
+
+.section.active {
+    display: block;
+}
+
+
+@media (max-width: 1024px) {
+    .container {
+        grid-template-columns: 1fr;
+        grid-template-areas:
+            "header"
+            "main"
+            "sidebar";
+    }
+
+    aside {
+        border-right: none;
+        border-bottom: 5px solid #fff;
+    }
+
+    .nav-options {
+        flex-direction: column;
+        gap: 10px;
+    }
+}
+
+@media (max-width: 768px) {
+    aside ul li a {
+        font-size: 16px;
+    }
+
+    main h1 {
+        font-size: 28px;
+    }
+
+    .nav-options button {
+        font-size: 14px;
+        padding: 8px 16px;
+    }
+
+    .info-table td {
+        padding: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    main {
+        padding: 12px;
+    }
+
+    main h1 {
+        font-size: 24px;
+    }
+
+    .info-table td {
+        font-size: 12px;
+        padding: 8px;
+    }
+
+    header {
+        padding: 10px;
+    }
+
+    footer {
+        padding: 10px;
+    }
+}
+
+
+
+form {
+    background-color: #fff;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.01);
+    width: 100%;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+}
+
+input {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #fff;
+    transition: border-color 0.3s;
+}
+
+input:focus {
+    border-color: #6653d4;
+    outline: none;
+}
+
+button {
+    width: 100%;
+    padding: 0.75rem;
+    border: none;
+    border-radius: 5px;
+    background-color: #6653d4;
+    color: #fff;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #5741c0;
+}
+
+button:focus {
+    outline: none;
+}
+
+a {
+    color: #6653d4;
+    text-decoration: none;
+}
+
+a:hover 
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header Section -->
+        <header>
+            <div class="logo">
+                <img src="LOGO2.png" alt="Logo">
+            </div>
+            <nav class="header-nav">
+                <a href="#">Home</a>
+                <a href="about.html">About</a>
+                <a href="mailto:admissions@mituniversity.edu.in">Contact</a>
+            </nav>
+        </header>
+        
+
+        <!-- Sidebar Navigation -->
+        <aside>
+            <h2>Menu</h2>
+            <ul>
+                <li><a href="#"><span class="material-icons">dashboard</span>Dashboard</a></li>
+                <li><a href="#"><span class="material-icons">person</span>Profile</a></li>
+                <li><a href="#"><span class="material-icons">task</span>Assignments</a></li>
+                <li><a href="#"><span class="material-icons">message</span>Messages</a></li>
+                <li><a href="#"><span class="material-icons">logout</span>Logout</a></li>
+            </ul>
+        </aside>
+        
+
+        <!-- Main Content Area -->
+        <main>
+            <h1>Welcome to the Admin Dashboard</h1>
+
+            <!-- Navigation buttons for different sections -->
+            <div class="nav-options">
+                <button onclick="showSection('students')">
+                    <span class="material-icons">search</span>
+                    Students List
+                </button>
+                <button onclick="showSection('studentinfo')">
+                    <span class="material-icons">person</span>
+                    Student Information
+                </button>
+                <button onclick="showSection('addstudent')">
+                    <span class="material-icons">add</span>
+                    Add Student
+                </button>
+            </div>
+            
+
+            <!-- Sections for students Information, Academic Information, and Feedbacks -->
+            <div id="students" class="section active">
+                <div class="content-box">
+                    
+                </div>
+            </div>
+            
+
+            <div id="studentinfo" class="section">
+                <div class="content-box">
+                    <h2>Student Information</h2>
+
+                </div>
+            </div>
+            
+            
+
+            <div id="addstudent" class="section">
+                <div class="content-box">
+                    <h2 style="margin-bottom: 20px;">Add Student</h2>
+                    <form id="addStudentForm">
+                        <div class="form-group">
+                            <label for="studentName">Student Name</label>
+                            <input type="text" id="studentName" required placeholder="Enter student name">
+                        </div>
+                        <div class="form-group">
+                            <label for="studentEmail">Email</label>
+                            <input type="email" id="studentEmail" required placeholder="Enter student email">
+                        </div>
+                        <div class="form-group">
+                            <label for="enrollmentId">Enrollment ID</label>
+                            <input type="text" id="enrollmentId" required placeholder="Enter enrollment ID">
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <input type="password" id="password" required placeholder="Enter password">
+                        </div>
+                        <button type="button" id="register" name="register" class="submit-button">Add Student</button>
+                    </form>                    
+                </div>
+            </div>
+            
+            
+        </main>
+    </div>
+
+    <footer>
+        <p>© 2024 MIT-ADT University.</p>
+    </footer>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-analytics.js";
+        import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-auth.js";
+        import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-database.js";
+    
+        const firebaseConfig = {
+            apiKey: "AIzaSyB4IIHXY7DJOnhGpZ7sni76ZU-cCleuohA",
+            authDomain: "mit-soc.firebaseapp.com",
+            databaseURL: "https://mit-soc-default-rtdb.firebaseio.com",
+            projectId: "mit-soc",
+            storageBucket: "mit-soc.appspot.com",
+            messagingSenderId: "543724803126",
+            appId: "1:543724803126:web:0f99f3a09abac2eadeb497",
+            measurementId: "G-E3KTEH64M2"
+        };
+    
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+        const auth = getAuth();
+        const database = getDatabase(app);
+    
+        document.getElementById("register").addEventListener("click", function() {
+            const email = document.getElementById("studentEmail").value;
+            const password = document.getElementById("password").value;
+            const studentName = document.getElementById("studentName").value;
+            const enrollmentId = document.getElementById("enrollmentId").value;
+    
+            createUserWithEmailAndPassword(auth, email, password)
+                .then((userCredential) => {
+                    const user = userCredential.user;
+                    const userId = email.split('@')[0]; // Get the first half of the email
+                    const studentData = {
+                        studentName: studentName,
+                        enrollmentId: enrollmentId
+                    };
+    
+                    // Store the student's data in the database
+                    set(ref(database, 'students/' + userId), studentData)
+                        .then(() => {
+                            console.log("Student data saved successfully!");
+                            alert("Registration successfully!!");
+                            document.getElementById("addStudentForm").reset();
+                        })
+                        .catch((error) => {
+                            console.error("Error saving student data: ", error);
+                        });
+                })
+                .catch((error) => {
+                    const errorMessage = error.message;
+                    console.log(errorMessage);
+                    alert(errorMessage);
+                });
+        });
+    </script>
+    
+
+    
+    <script>
+                        function showSection(sectionId) {
+                    // Hide all sections
+                    var sections = document.querySelectorAll('.section');
+                    sections.forEach(function(section) {
+                        section.classList.remove('active');
+                    });
+        
+                    // Show the selected section with smooth transition
+                    var targetSection = document.getElementById(sectionId);
+                    targetSection.classList.add('active');
+                }
+    </script>
+
+</body>
+</html>

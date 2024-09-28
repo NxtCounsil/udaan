@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WhatsApp Clone</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: Arial, sans-serif;
+    }
+    
+    body, html {
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #f0f0f0;
+    }
+    
+    .chat-container {
+        width: 100%;
+        height: 100%;
+        background-color: white;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+    }
+    
+    .chat-header {
+        background-color: #8672ff;
+        padding: 20px;
+        text-align: center;
+        color: white;
+        flex-shrink: 0;
+    }
+    
+    .chat-box {
+        flex: 1;
+        padding: 20px;
+        overflow-y: auto;
+        background-color: #f9f9f9;
+    }
+    
+    .chat-input {
+        display: flex;
+        padding: 10px;
+        background-color: #eeeeee;
+        border-top: 1px solid #ddd;
+        flex-shrink: 0;
+    }
+    
+    .chat-input input {
+        flex: 1;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        font-size: 16px;
+        margin-right: 10px;
+    }
+    
+    .chat-input button {
+        background-color: #8672ff;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 10px;
+        cursor: pointer;
+    }
+    
+    .chat-input button:hover {
+        background-color: #6a5bcc;
+    }
+    
+    .message {
+        margin-bottom: 15px;
+        padding: 10px;
+        background-color: #8672ff;
+        color: white;
+        border-radius: 10px;
+        max-width: 80%;
+    }
+    
+    .admin-message {
+        background-color: #6a5bcc;
+        margin-left: auto;
+    }
+    
+    .user-message {
+        background-color: #8672ff;
+    }
+    
+</style>
+<body>
+    <div class="chat-container">
+        <div class="chat-header">
+            <h2>Chat with Admin</h2>
+        </div>
+        <div id="chat-box" class="chat-box">
+            <!-- Messages will be displayed here -->
+        </div>
+        <div class="chat-input">
+            <input type="text" id="messageInput" placeholder="Type your message...">
+            <button id="sendBtn">Send</button>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('sendBtn').addEventListener('click', function() {
+            sendMessage();
+        });
+        
+        document.getElementById('messageInput').addEventListener('keydown', function(event) {
+            if (event.key === 'Enter') {
+                sendMessage();
+            }
+        });
+        
+        function sendMessage() {
+            const messageInput = document.getElementById('messageInput');
+            const messageText = messageInput.value.trim();
+        
+            if (messageText !== "") {
+                // Create user message element
+                const messageElement = document.createElement('div');
+                messageElement.classList.add('message', 'user-message');
+                messageElement.textContent = messageText;
+        
+                // Append message to chat box
+                const chatBox = document.getElementById('chat-box');
+                chatBox.appendChild(messageElement);
+                chatBox.scrollTop = chatBox.scrollHeight; // Scroll to the bottom
+        
+                // Clear input
+                messageInput.value = "";
+        
+                // Simulate admin reply
+                setTimeout(function() {
+                    const adminReply = document.createElement('div');
+                    adminReply.classList.add('message', 'admin-message');
+                    adminReply.textContent = "Admin: Got your message!";
+                    chatBox.appendChild(adminReply);
+                    chatBox.scrollTop = chatBox.scrollHeight;
+                }, 1000); // Admin reply delay of 1 second
+            }
+        }
+        
+    </script>
+</body>
+</html>

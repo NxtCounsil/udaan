@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #eef1f5;
+    color: #333;
+}
+
+.container {
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    grid-template-rows: auto 1fr;
+    min-height: 100vh;
+    grid-template-areas:
+        "header header"
+        "sidebar main";
+}
+
+header {
+    grid-area: header;
+    background: linear-gradient(135deg, #6a5acd, #8672ff); /* Gradient background */
+    padding: 20px;
+    display: flex;
+    justify-content: space-between; /* Space for logo and navigation */
+    align-items: center;
+    border-bottom: 5px solid #fff;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+header .logo img {
+    height: 60px;
+    width: auto;
+    transition: transform 0.3s; /* Add a hover effect */
+}
+
+header .logo img:hover {
+    transform: scale(1.1); /* Slightly enlarge the logo on hover */
+}
+
+.header-nav {
+    display: flex;
+    gap: 20px; /* Space between navigation items */
+}
+
+.header-nav a {
+    text-decoration: none;
+    color: white;
+    font-weight: 600;
+    transition: color 0.3s, text-shadow 0.3s;
+}
+
+.header-nav a:hover {
+    color: #f0e68c; /* Lighter color on hover */
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.5); /* Glow effect */
+}
+
+
+aside {
+    grid-area: sidebar;
+    background: linear-gradient(180deg, #5b4abf 0%, #4a3e8d 100%); /* Gradient background */
+    padding: 20px;
+    color: white;
+    border-right: 5px solid #fff;
+    box-shadow: 4px 0 15px rgba(0, 0, 0, 0.2);
+    position: relative; /* For positioning hover effect */
+}
+
+aside h2 {
+    margin-bottom: 20px;
+    font-size: 24px; 
+    color: #f0e68c; /* Lighter color for contrast */
+    text-align: center; /* Center the title */
+}
+
+aside ul {
+    list-style: none;
+}
+
+aside ul li {
+    margin: 15px 0;
+}
+
+aside ul li a {
+    text-decoration: none;
+    color: white;
+    font-size: 18px;
+    padding: 12px 20px;
+    border-radius: 8px; /* More rounded corners */
+    display: flex; 
+    align-items: center; 
+    transition: background-color 0.3s, transform 0.2s; 
+    position: relative; /* For the hover effect */
+}
+
+aside ul li a:hover {
+    background-color: rgba(255, 255, 255, 0.1); /* Light hover effect */
+    transform: translateX(5px); 
+}
+
+aside ul li a:hover::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 4px; /* Line under the item */
+    background: #f0e68c; /* Highlight color */
+    border-radius: 8px; /* Match the button style */
+    transform: scaleX(0);
+    transition: transform 0.3s;
+}
+
+aside ul li a:hover::before {
+    transform: scaleX(1); /* Animate the line on hover */
+}
+
+aside ul li a .material-icons {
+    margin-right: 10px; 
+    font-size: 24px; 
+    vertical-align: middle; 
+}
+
+
+main {
+    grid-area: main;
+    padding: 40px;
+    background-color: white;
+    border-radius: 10px;
+    margin: 20px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s;
+}
+
+main:hover {
+    transform: translateY(-2px);
+}
+
+main h1 {
+    color: #503dbd;
+    font-size: 32px;
+    margin-bottom: 20px;
+}
+
+.nav-options {
+    display: flex;
+    justify-content: space-between; /* Distribute space evenly */
+    margin: 30px 0;
+    gap: 20px; /* Space between buttons */
+}
+
+.nav-options button {
+    background-color: #6653d4;
+    color: white;
+    border: none;
+    padding: 15px 25px; /* Increased padding for better touch targets */
+    border-radius: 10px; /* Rounded corners for a softer look */
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+    transition: background-color 0.3s, transform 0.2s;
+    position: relative; /* For the hover effect */
+    flex: 1; /* Allow buttons to grow equally */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+}
+
+.nav-options button:hover {
+    background-color: #5a47ca;
+    transform: translateY(-3px); /* Lift effect on hover */
+}
+
+.nav-options button:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.1); /* Light overlay on hover */
+    border-radius: 10px;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.nav-options button:hover:before {
+    opacity: 1; /* Show overlay on hover */
+}
+
+.nav-options button i {
+    margin-right: 10px; /* Space between icon and text */
+}
+
+/* Example icon styles */
+.nav-options button .material-icons {
+    font-size: 20px; /* Icon size */
+    vertical-align: middle; /* Align with text */
+}
+
+
+.section {
+    opacity: 0;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    transition: opacity 0.5s ease-in-out;
+    z-index: 1;
+}
+
+.section.active {
+    position: relative;
+    opacity: 1;
+    z-index: 2;
+}
+
+.content-box {
+    padding: 20px;
+    background-color: #f7e6ff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+
+.edit-icon,
+.save-icon {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.edit-icon {
+    font-size: 24px;
+    color: #6653d4;
+}
+
+.edit-icon:hover {
+    color: #5a47ca;
+}
+
+.save-icon {
+    display: none;
+    font-size: 16px;
+    color: white;
+    background-color: #6653d4;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 5px;
+}
+
+.save-icon:hover {
+    background-color: #5a47ca;
+}
+
+.info-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.info-table td {
+    padding: 15px;
+    border: 1px solid #e0d7ff;
+    border-radius: 0;
+}
+
+.info-table tr:nth-child(even) {
+    background-color: #f7e6ff;
+}
+
+.info-table tr:hover {
+    background-color: #e2d7ff;
+}
+
+.info-table td:first-child {
+    font-weight: bold;
+}
+
+footer {
+    text-align: center;
+    padding: 20px;
+    background: linear-gradient(135deg, #4a3e8d, #6a5acd); /* Bold gradient */
+    color: white;
+    position: relative;
+    box-shadow: 0 -2px 10px rgba(251, 249, 249, 0.02);
+    border-top: 1px solid #fff;
+}
+
+footer p {
+    margin: 0;
+    font-size: 18px; /* Larger font size for visibility */
+    font-weight: bold; /* Make text stand out */
+    letter-spacing: 1px; /* Slightly spaced letters for elegance */
+}
+
+footer p::after {
+    content: '';
+    display: block;
+    width: 80px; /* Emphasizing the line */
+    height: 4px; /* Thickness of the line */
+    background: #f0e68c; /* Highlight color */
+    margin: 10px auto; /* Center the line */
+    border-radius: 5px; /* Rounded edges */
+}
+
+
+.section {
+    display: none;
+}
+
+.section.active {
+    display: block;
+}
+
+.info-table input {
+    border: none;
+    width: 100%;
+    background: transparent;
+    font-size: 14px;
+    padding: 8px;
+    outline: none;
+}
+
+.info-table input:focus {
+    outline: none;
+    border-bottom: 1px solid #6653d4;
+}
+
+@media (max-width: 1024px) {
+    .container {
+        grid-template-columns: 1fr;
+        grid-template-areas:
+            "header"
+            "main"
+            "sidebar";
+    }
+
+    aside {
+        border-right: none;
+        border-bottom: 5px solid #fff;
+    }
+
+    .nav-options {
+        flex-direction: column;
+        gap: 10px;
+    }
+}
+
+@media (max-width: 768px) {
+    aside ul li a {
+        font-size: 16px;
+    }
+
+    main h1 {
+        font-size: 28px;
+    }
+
+    .nav-options button {
+        font-size: 14px;
+        padding: 8px 16px;
+    }
+
+    .info-table td {
+        padding: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    main {
+        padding: 12px;
+    }
+
+    main h1 {
+        font-size: 24px;
+    }
+
+    .info-table td {
+        font-size: 12px;
+        padding: 8px;
+    }
+
+    header {
+        padding: 10px;
+    }
+
+    footer {
+        padding: 10px;
+    }
+}
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header Section -->
+        <header>
+            <div class="logo">
+                <img src="LOGO2.png" alt="Logo">
+            </div>
+            <nav class="header-nav">
+                <a href="#">Home</a>
+                <a href="about.html">About</a>
+                <a href="mailto:admissions@mituniversity.edu.in">Contact</a>
+            </nav>
+        </header>
+        
+
+        <!-- Sidebar Navigation -->
+        <aside>
+            <h2>Menu</h2>
+            <ul>
+                <li><a href="#"><span class="material-icons">dashboard</span>Dashboard</a></li>
+                <li><a href="#"><span class="material-icons">person</span>Profile</a></li>
+                <li><a href="#"><span class="material-icons">task</span>Assignments</a></li>
+                <li><a href="#"><span class="material-icons">message</span>Messages</a></li>
+                <li><a href="#"><span class="material-icons">logout</span>Logout</a></li>
+            </ul>
+        </aside>
+        
+
+        <!-- Main Content Area -->
+        <main>
+            <h1>Welcome to the Student Dashboard</h1>
+
+            <!-- Navigation buttons for different sections -->
+            <div class="nav-options">
+                <button onclick="showSection('personal')">
+                    <span class="material-icons">person</span>
+                    Personal Information
+                </button>
+                <button onclick="showSection('academic')">
+                    <span class="material-icons">school</span>
+                    Academic Information
+                </button>
+                <button onclick="showSection('feedbacks')">
+                    <span class="material-icons">feedback</span>
+                    Feedbacks
+                </button>
+            </div>
+            
+
+            <!-- Sections for Personal Information, Academic Information, and Feedbacks -->
+            <div id="personal" class="section active">
+                <div class="content-box">
+                    <h2>Personal Information</h2>
+                    <span class="material-icons edit-icon" onclick="toggleEdit()">edit</span>
+                    <span class="material-icons save-icon" style="display: none;" onclick="saveChanges()">save</span>
+                    <table class="info-table">
+                        <tbody>
+                            <tr>
+                                <td><strong>Student Email:</strong></td>
+                                <td><input type="text" id="studentName" name="studentName" value="N/A" disabled></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Date of Birth:</strong></td>
+                                <td><input type="text" name="dateOfBirth" value="dd/mm/yyyy" disabled></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Address:</strong></td>
+                                <td><input type="text" name="address" value="N/A" disabled></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Phone:</strong></td>
+                                <td><input type="text" name="phone" value="+91 0000000000" disabled></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Father's Name:</strong></td>
+                                <td><input type="text" name="fatherName" value="N/A" disabled></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Mother's Name:</strong></td>
+                                <td><input type="text" name="motherName" value="N/A" disabled></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Father's Occupation:</strong></td>
+                                <td><input type="text" name="fatherOccupation" value="N/A" disabled></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Mother's Occupation:</strong></td>
+                                <td><input type="text" name="motherOccupation" value="N/A" disabled></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Phone Number (Father / Mother):</strong></td>
+                                <td><input type="text" name="parentPhone" value="+91 0000000000" disabled></td>
+                            </tr>
+                            
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+
+            <div id="academic" class="section">
+                <div class="content-box">
+                    <h2>Academic Information</h2>
+                    <!-- No edit or save icons here since it's non-editable -->
+                    <table class="info-table">
+                        <tbody>
+                            <tr>
+                                <td><strong>Enrollment ID:</strong></td>
+                                <td>EN0001</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Roll Number:</strong></td>
+                                <td>RL1234</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Year:</strong></td>
+                                <td>2024</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Division:</strong></td>
+                                <td>A</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Language:</strong></td>
+                                <td>English</td>
+                            </tr>
+                            <tr>
+                                <td><strong>MD Subject:</strong></td>
+                                <td>Computer Science</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            
+
+            <div id="feedbacks" class="section">
+                <div class="content-box">
+                    <h2>Feedbacks</h2>
+                    <p>No feedbacks available.</p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <footer>
+        <p>© 2024 MIT-ADT University.</p>
+    </footer>
+    
+    
+
+    <script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-analytics.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-database.js"></script>
+
+    <script src="script.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Bar and User List</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .search-container {
+            margin-bottom: 20px;
+        }
+
+        .search-bar {
+            padding: 12px 20px;
+            width: 300px;
+            border: 2px solid #ccc;
+            border-radius: 30px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: border-color 0.3s, box-shadow 0.3s;
+            outline: none;
+        }
+
+        .search-bar:focus {
+            border-color: #8672ff;
+            box-shadow: 0 4px 20px rgba(134, 114, 255, 0.5);
+        }
+
+        .user-list {
+            max-width: 600px;
+            width: 100%;
+            border-radius: 10px;
+            overflow: hidden;
+            background: white;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+
+        th {
+            background-color: #8672ff;
+            color: white;
+            font-weight: bold;
+        }
+
+        tr:hover {
+            background-color: #f2f2f2;
+        }
+    </style>
+    <script src="https://www.gstatic.com/firebasejs/9.8.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.8.0/firebase-database.js"></script>
+</head>
+<body>
+
+    <div class="search-container">
+        <input type="text" id="searchInput" placeholder="Search users..." class="search-bar"/>
+    </div>
+
+    <div class="user-list">
+        <table id="userTable">
+            <thead>
+                <tr>
+                    <th>User Name</th>
+                    <th>Enrollment ID</th>
+                    <th>Email</th>
+                </tr>
+            </thead>
+            <tbody id="userTableBody">
+                <!-- User rows will be populated here -->
+            </tbody>
+        </table>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-analytics.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-database.js"></script>
+
+
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.8.0/firebase-app.js";
+        import { getDatabase, ref, get } from "https://www.gstatic.com/firebasejs/9.8.0/firebase-database.js";
+    
+        const firebaseConfig = {
+            apiKey: "AIzaSyB4IIHXY7DJOnhGpZ7sni76ZU-cCleuohA",
+            authDomain: "mit-soc.firebaseapp.com",
+            databaseURL: "https://mit-soc-default-rtdb.firebaseio.com",
+            projectId: "mit-soc",
+            storageBucket: "mit-soc.appspot.com",
+            messagingSenderId: "543724803126",
+            appId: "1:543724803126:web:0f99f3a09abac2eadeb497",
+            measurementId: "G-E3KTEH64M2"
+        };
+    
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const database = getDatabase(app);
+    
+        function fetchUsers() {
+            const userTableBody = document.getElementById('userTableBody');
+            userTableBody.innerHTML = ''; // Clear the table body before adding new data
+    
+            const usersRef = ref(database, 'students');
+            get(usersRef).then((snapshot) => {
+                if (snapshot.exists()) {
+                    snapshot.forEach((childSnapshot) => {
+                        const userData = childSnapshot.val();
+                        const row = document.createElement('tr');
+    
+                        row.innerHTML = `
+                            <td>${userData.studentName}</td>
+                            <td>${userData.enrollmentId}</td>
+                            <td>${userData.email}</td>
+                        `;
+    
+                        userTableBody.appendChild(row);
+                    });
+                } else {
+                    console.log('No data available.');
+                }
+            }).catch((error) => {
+                console.error("Error fetching data: ", error);
+            });
+        }
+    
+        // Call the function to fetch users when the page loads
+        window.onload = fetchUsers;
+    </script>
+    
+
+</body>
+</html>

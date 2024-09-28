@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Fees Details</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            justify-content: space-between;
+            height: 100vh;
+            margin: 0;
+            background-image: url('your-background-image.jpg'); /* Add your own background image here */
+            background-size: cover;
+            background-position: center;
+            overflow: hidden;
+        }
+
+        .left-section, .right-section {
+            width: 45%;
+            padding: 20px;
+            position: relative;
+            background-color: rgba(255, 255, 255, 0.85);
+            border-radius: 15px;
+            transform-origin: center;
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .left-section {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transform: scale(0.5);
+            animation: bounceInLeft 1.5s ease-out forwards, rotateIn 5s infinite alternate ease-in-out;
+        }
+
+        .right-section {
+            padding: 20px;
+            transform: translateX(100%);
+            animation: slideInRight 2s ease-out forwards, waveEffect 4s infinite alternate ease-in-out;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .profile-section {
+            text-align: center;
+            animation: rotate360 5s infinite linear;
+        }
+
+        .profile-section img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            border: 1px solid #000;
+            display: block;
+            margin: 0 auto 10px;
+            animation: floatImage 3s infinite ease-in-out alternate;
+        }
+
+        .profile-section h3, .profile-section p {
+            margin: 5px 0;
+            animation: colorShift 3s infinite alternate ease-in-out;
+        }
+
+        .logout-btn {
+            display: inline-block;
+            padding: 10px 20px;
+            border: 2px solid #000;
+            background-color: #f0f0f0;
+            cursor: pointer;
+            transition: background-color 0.5s, transform 0.5s;
+            animation: swingButton 3s infinite alternate;
+        }
+
+        .logout-btn:hover {
+            background-color: #ddd;
+            transform: scale(1.1);
+        }
+
+        .info-section {
+            padding: 40px;
+            background-color: #fff;
+            border-radius: 15px;
+            width: 100%;
+            box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.2);
+            animation: fadeInScale 1.5s ease-out forwards, pulseEffect 6s infinite alternate;
+        }
+
+        .info-section label {
+            font-size: 18px;
+            margin-bottom: 5px;
+            display: inline-block;
+            animation: fadeInRight 2s infinite alternate;
+        }
+
+        .info-section input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+        .info-section input:focus {
+            border-color: #00aaff;
+            box-shadow: 0 0 10px rgba(0, 170, 255, 0.5);
+            outline: none;
+        }
+
+        h4 {
+            margin-top: 30px;
+            color: #555;
+            animation: fadeInTop 2s infinite alternate;
+        }
+
+        /* New Animations */
+
+        @keyframes bounceInLeft {
+            0% {
+                transform: translateX(-100%) scale(0.5);
+                opacity: 0;
+            }
+            100% {
+                transform: translateX(0) scale(1);
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideInRight {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes rotateIn {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes rotate360 {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes floatImage {
+            0% {
+                transform: translateY(0);
+            }
+            100% {
+                transform: translateY(-10px);
+            }
+        }
+
+        @keyframes colorShift {
+            0% {
+                color: red;
+            }
+            50% {
+                color: blue;
+            }
+            100% {
+                color: green;
+            }
+        }
+
+        @keyframes swingButton {
+            0% {
+                transform: rotate(0deg);
+            }
+            50% {
+                transform: rotate(5deg);
+            }
+            100% {
+                transform: rotate(-5deg);
+            }
+        }
+
+        @keyframes fadeInScale {
+            0% {
+                transform: scale(0.5);
+                opacity: 0;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        @keyframes pulseEffect {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        @keyframes fadeInRight {
+            0% {
+                transform: translateX(50px);
+                opacity: 0;
+            }
+            100% {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeInTop {
+            0% {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            100% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes waveEffect {
+            0% {
+                transform: rotate(0deg);
+            }
+            50% {
+                transform: rotate(15deg);
+            }
+            100% {
+                transform: rotate(-15deg);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="left-section">
+        <div class="profile-section">
+            <img src="https://via.placeholder.com/80" alt="User Profile">
+            <h3>User Name</h3>
+            <p>123@gmail.com</p>
+            <button class="logout-btn">Logout</button>
+        </div>
+    </div>
+
+    <div class="right-section">
+        <div class="info-section">
+            <label>Enrollment No.: <input type="text" placeholder="Enter Enrollment Number"></label>
+            <label>Passing Year: <input type="text" placeholder="Enter Passing Year"></label>
+            <h4>Sem-1</h4>
+            <label>Paid Fees: <input type="text" placeholder="Enter Paid Fees"></label>
+            <label>Remaining Fees: <input type="text" placeholder="Enter Remaining Fees"></label>
+            <label>Total Fees: <input type="text" placeholder="Enter Total Fees"></label>
+        </div>
+    </div>
+
+</body>
+</html>
